@@ -1,0 +1,120 @@
+@model IEnumerable<independentia.Models.Film>
+
+@{
+    ViewData["Title"] = "Index";
+    var purchasedFilmIds = ViewBag.PurchasedFilmIds as List<int>;
+}
+
+<style>
+    .films-background {
+        background-image: url("images/film_index.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .films-background h1,
+    .films-background a,
+    .films-background th{
+        color: white !important;
+    }
+    .films-background table {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    .films-background a{
+    text-decoration: underline;
+    }
+    .films-background td span,
+    .films-background td a{
+    color:  white !important;
+    }
+</style>
+
+<div class="films-background p-4">
+    <h1>Index</h1>
+    
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-light">Create New</a>
+</p>
+<table class="table table-dark table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Director)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WatchCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WatchCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <br/>
+                
+                @if(User.Identity.IsAuthenticated)
+                {
+                    if (purchasedFilmIds != null && purchasedFilmIds.Contains(item.ID))
+                    {
+                        <span class="text-success">Purchased</span>
+                    }
+                    else
+                    {
+                        <form asp-controller="Customer" asp-action="Buy" method="post" class="mt-1">
+                            <input type="hidden" name="filmId" value="@item.ID"/>
+                            <button type="submit" class="btn btn-success">Buy</button>
+                        </form>
+                        <form asp-controller="Customer" asp-action="Checkout" method="post" class="mt-1">
+                            <input type="hidden" name="filmId" value="@item.ID"/>
+                            <button type="submit" class="btn btn-success">Buy</button>
+                        </form>
+                    }
+                    
+                }
+                else
+                {
+                    <p><a href="/Identity/Account/Login">Log In</a> to purchase this film.</p>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>

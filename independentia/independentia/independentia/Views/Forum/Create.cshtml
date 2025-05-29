@@ -1,0 +1,30 @@
+@model independentia.ViewModels.CreateTopicViewModel
+
+@{
+    ViewData["Title"] = "Start New Topic";
+}
+
+<h2>Start a New Discussion</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Topic Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">First Message</label>
+        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Post Topic</button>
+    <a asp-action="Index" class="btn btn-secondary ms-2">Back to Forum</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

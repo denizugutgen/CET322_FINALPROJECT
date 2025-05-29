@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "independentia", "independentia\independentia.csproj", "{02957BD9-47F0-4EAB-8987-199892F4BABB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02957BD9-47F0-4EAB-8987-199892F4BABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02957BD9-47F0-4EAB-8987-199892F4BABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02957BD9-47F0-4EAB-8987-199892F4BABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02957BD9-47F0-4EAB-8987-199892F4BABB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

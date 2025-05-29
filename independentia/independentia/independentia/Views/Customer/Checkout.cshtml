@@ -1,0 +1,25 @@
+@model independentia.Models.Film
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container text-white mt-5"/>
+<h2>Checkout: @Model.Title</h2>
+<img src="@Model.PosterUrl" alt="@Model.Title Poster" style="width: 200px;" />
+<p>Price: $@Model.Price</p>
+<form asp-controller="Customer" asp-action="ConfirmPurchase" method="post">
+    <input type="hidden" name="filmId" value="@Model.ID" />
+    <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required />
+    </div>
+    <div class="form-group">
+        <label for="expiry">Expiry Date</label>
+        <input type="text" class="form-control" id="expiry" placeholder="MM/YY" required />
+    </div>
+    <div class="form-group">
+        <label for="cvv">CVV</label>
+        <input type="text" class="form-control" id="cvv" placeholder="123" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Confirm Payment</button>
+</form>

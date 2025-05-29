@@ -1,0 +1,190 @@
+﻿@model independentia.Views.Category.HomePageModel
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+
+<style>
+    body {
+        background-image: url("images/mainpagebg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+    }
+
+    .swiper {
+        width: 100%;
+        padding: 30px 0;
+    }
+
+    .swiper-slide {
+        position: relative;
+        background: #1c1c1c;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        color: white;
+        width: 240px !important;
+        height: 360px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .swiper-slide:hover {
+        transform: scale(1.03);
+    }
+
+    .film-poster {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-bottom: 2px solid #444;
+    }
+    .film-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        display: none;
+        z-index: 2;
+    }
+    .swiper-slide:hover .film-video {
+        display: block;
+    }
+    .swiper-slide:hover .film-poster {
+        opacity: 0;
+    }
+
+    .film-info {
+        padding: 12px;
+        z-index: 3;
+    }
+
+    .film-info h5 {
+        margin-bottom: 4px;
+        font-size: 16px;
+    }
+
+    .film-info p {
+        font-size: 13px;
+        color: #ccc;
+    }
+    .badge-new{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: crimson;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        z-index: 4;
+        }
+    .rating{
+        color: gold;
+        font-size: 14px;
+        }
+    
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: white;
+    }
+</style>
+
+<h2 class="text-white">Most Purchased</h2>
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        @foreach (var film in Model.MostPurchased)
+        {
+            <div class="swiper-slide">
+                <img src="@film.PosterUrl" alt="@film.Title Poster" class="film-poster" />
+                <div class="film-info">
+                    <h5>@film.Title</h5>
+                    <p><strong>Price:</strong> $@film.Price</p>
+                    <a asp-controller="Film" asp-action="Details" asp-route-id="@film.ID" class="btn btn-outline-light btn-sm mt-2">
+                        View Details
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Customer" asp-action="Checkout" method="post" class="mt-2">
+                            <input type="hidden" name="filmId" value="@film.ID"/>
+                            <button type="submit" class="btn btn-success btn-sm">Buy</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-outline-primary btn-sm mt-2">Log in to Buy</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+<h2 class="text-white mt-5">Most Watched</h2>
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        @foreach (var film in Model.MostWatched)
+        {
+            <div class="swiper-slide">
+                <img src="@film.PosterUrl" alt="@film.Title Poster" class="film-poster" />
+                <div class="film-info">
+                    <h5>@film.Title</h5>
+                    <p><strong>Price:</strong> $@film.Price</p>
+                    <a asp-controller="Film" asp-action="Details" asp-route-id="@film.ID" class="btn btn-outline-light btn-sm mt-2">
+                        View Details
+                    </a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Customer" asp-action="Checkout" method="post" class="mt-2">
+                            <input type="hidden" name="filmId" value="@film.ID"/>
+                            <button type="submit" class="btn btn-success btn-sm">Buy</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a href="/Identity/Account/Login" class="btn btn-outline-primary btn-sm mt-2">Log in to Buy</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+    document.querySelectorAll(".mySwiper").forEach(swiperContainer => {
+        new Swiper(swiperContainer, {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            loop: true,
+            navigation: {
+                nextEl: swiperContainer.querySelector(".swiper-button-next"),
+                prevEl: swiperContainer.querySelector(".swiper-button-prev")
+            },
+            breakpoints: {
+                0: { slidesPerView: 1 },
+                576: { slidesPerView: 2 },
+                992: { slidesPerView: 3 },
+                1440: { slidesPerView: 4 }
+            }
+        });
+    });
+</script>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+

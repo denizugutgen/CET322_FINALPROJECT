@@ -1,0 +1,86 @@
+@model List<FilmPurchase>
+
+@{
+    ViewBag.Title = "My Archive";
+    Layout = "_Layout";
+}
+
+<style>
+    .archive-section{
+        background-color: #121212;
+        padding: 50px 20px;
+        min-height: 100vh;
+        color: white;
+    }
+    .film-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .film-card{
+        background-color: #1f1f1f;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease;
+    }
+    .film-poster{
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+    .film-details{
+        padding: 15px;
+    }
+    .film-details p{
+        font-size: 14px;
+        color: #ccc;
+        min-height: 40px;
+    }
+    .btn-view{
+        background: transparent;
+        color: white;
+        border: 1px solid white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+    .btn-view:hover{
+        background: white;
+        color: #121212;
+    }
+    
+</style>
+<div class="archive-section">
+    <h2 class="text-center mb-5">🎬 My Purchased Films</h2>
+    
+@if (!Model.Any())
+{
+    <div class="text-center">
+    <p class="text-light">You have not purchased any films yet.</p>
+    <a asp-controller="Film" asp-action="Index" class="btn btn-primary mt-3">
+        <i class="bi bi-film"></i>
+        Browse Films
+    </a>
+    </div>
+}
+else
+{
+    <div class="film-grid">
+        @foreach (var film in Model)
+        {
+            <div class="film-card">
+                <img src="@film.Film.PosterUrl" alt="@film.Film.Title Poster" class="film-poster"/>
+                <div class="film-details">
+                    <h5>@film.Film.Title</h5>
+                    <p>@film.Description</p>
+                    <a asp-controller="Film" asp-action="Details" asp-route-id="@film.ID" class="btn-view">View Details</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+</div>

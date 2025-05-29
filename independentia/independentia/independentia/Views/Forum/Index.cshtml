@@ -1,0 +1,40 @@
+@model IEnumerable<independentia.Models.ForumTopic>
+
+@{
+    ViewData["Title"] = "Forum";
+}
+
+<h2>Community Forum</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">Start New Topic</a>
+}
+else
+{
+    <p><a href="/Identity/Account/Login">Log in</a> to create or join a discussion.</p>
+}
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var topic in Model)
+    {
+        <tr>
+            <td>@topic.Title</td>
+            <td>@topic.UserId?</td>
+            <td>@topic.CreatedAt.ToShortDateString()</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@topic.ID" class="btn btn-sm btn-outline-secondary">View</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
